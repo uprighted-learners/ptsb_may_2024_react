@@ -1,8 +1,16 @@
-const AboutMe = () => {
+const AboutMe = (props) => {
 
-
+    console.log(props.myName);
     return (
-        <>About me</>
+      <>
+        {
+        props.myName ?
+        <h3>Hello {props.myName}</h3>
+        : 
+        <h3>No name provided</h3>
+        }
+      
+      </>
     )
 
 

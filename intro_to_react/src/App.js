@@ -1,25 +1,43 @@
 import { useState } from "react"
 import './App.css';
 import AboutMe from "./Components/AboutMe"
+import Form from "./Components/Form"
 
 function App() {
-  const [myName, setMyName] = useState("")
+  const [myName, setMyName] = useState("");
+
+  const handleChange = (event) => {
+    setMyName(event.target.value)
+  }
 
   return (
     // Represents a fragment tag, acts as a container, in order to return 1 thing.
     <> 
-
       <div className="App">
-        
-        <h1>my name</h1>
+  
+      <form onSubmit={(event) => {
+        event.preventDefault();
+        console.log("form was submitted")
+      }}>
 
-        {myName}
+       <label htmlFor="my-name">Name:</label>
+       {/* //? Event listener directly on input field */}
+       <input id="my-name" onChange={handleChange} />
+
+       <button>Update Name</button>
+
+      </form>
+
+        {/* {myName} */}
       </div>
 
       <div>
       <NewComponent />
-      <AboutMe />
+
+      <AboutMe myName={myName} />
       </div>
+
+      <Form />
     </>
   );
 }
