@@ -1,6 +1,6 @@
 import React from "react";
 
-const Nav = () => {
+const Nav = (props) => {
   return (
     <nav>
       <p>
@@ -13,6 +13,18 @@ const Nav = () => {
 
 
       {/* Handle log out button here */}
+      {
+        props.loggedIn && 
+        <div className="row nav-user">
+          <h5 style={{
+            margin : 0,
+          }}>👤{props.username}</h5>
+        <button onClick={() => props.handleLogout()}>Logout</button>
+
+        </div>
+
+
+      }
 
     </nav>
   );
