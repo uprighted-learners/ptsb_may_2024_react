@@ -61,16 +61,11 @@ const HookUseEffect = () => {
     //     // setInterval(setCount(prev => prev+1), 1000)
     // },[count])
 
-    useEffect(() => {
-        console.log("I am rendering");
-        let interval = setInterval(() => setCount(prev => prev+1), 1000)
-        return () => clearInterval(interval)
-    },[])
-
-
-
-  
-
+    // useEffect(() => {
+    //     console.log("I am rendering");
+    //     let interval = setInterval(() => setCount(prev => prev+1), 1000)
+    //     return () => clearInterval(interval)
+    // },[])
 
   return <div>
 
@@ -78,7 +73,78 @@ const HookUseEffect = () => {
     <button onClick={() => setCount(prev => prev+1)}>Increase</button>
 
     {/* <button onClick={() => setMyName("Amit")}>Change name</button> */}
+
+    <UseEffectFetch />
   </div>;
 };
+
+
+const UseEffectFetch = () => {
+    const [selectedOption, setSelectedOption] = useState("films")
+    //? Container to store fetched results
+    const [results, setResults] = useState([])
+    //? Loading indicator
+    const [loading, setLoading] = useState(false)
+
+
+    useEffect(() => {
+        const controller = new AbortController();
+        const signal = controller.signal
+        const fetchResults = async () => {
+            setLoading(true)
+            try{
+                let results = await fetch(`https://ghibliapi.vercel.app/${selectedOption}`, {signal})
+
+                let json = await results.json()
+
+                console.log(json);
+                setResults(json)
+                setLoading(false)
+                
+            }catch(err){
+                console.log(err);
+            }
+        }
+
+        fetchResults()
+        // Cancel network request when component unmounts
+        return () => controller.abort()
+
+    }, [selectedOption])
+
+
+    const options = ["films", "people", "locations", "species", "vehicles"]
+
+    const displayResults = () => {
+        return results.map((obj) => {
+            console.log(obj);
+            return (
+                <div style={{border: "1px solid blue"}}>
+                    <img src={obj.image} />
+                    <h4>{obj.name}</h4>
+                    <h4>{obj.title}</h4>
+                    <p>{obj.description}</p>
+                </div>
+            )
+        })
+    }
+
+
+    return (
+        <>
+        <h2>Studio Ghibli</h2>
+        <h3>{selectedOption}</h3>
+        
+        <select onChange={(e) => setSelectedOption(e.target.value) }>
+            {options.map((string) => {
+                return <option key={string}>{string}</option>
+            })}
+        </select>
+
+        {loading ? <h3>Loading...</h3> : displayResults() }
+        
+        </>
+    )
+}
 
 export default HookUseEffect;
