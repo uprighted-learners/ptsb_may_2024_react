@@ -25,7 +25,54 @@ function App() {
     <>
     {msgNotifier()}
 
-    <Button />
+    {
+      showConfirmDelete && 
+      <div className='modal'>
+        <h1>Are you sure you want to delete all of your messages?</h1>
+        
+        <Button 
+        color="red"
+        text="Delete"
+        handleClick={() => handleDelete()}
+        />
+
+        <div style={{position: "absolute", top: 0, right: 0}}>
+          <Button 
+          color="transparent"
+          text="❌"
+          handleClick={() => setShowConfirmDelete(false)}          
+          />
+          
+        </div>
+      </div>
+
+    }
+    <Button 
+    color="blue"
+    text={showMessages ? "Hide" : "Show"}
+    handleClick={() => setShowMessages((prev) => !prev)}
+    
+    />
+
+    {
+      showMessages && 
+      <div>
+        {messages.length > 0 && 
+        <Button
+        color="red"
+        text="Delete All"
+        handleClick={() => setShowConfirmDelete(true)}
+        />}
+
+        {messages.length > 0 ? messages.map((msg) => <p key={msg}>{msg}</p>) : <h4>No messages in inbox</h4> }
+
+      </div>
+
+
+
+    }
+
+
 
     </>
   )
