@@ -6,7 +6,7 @@ import Button from "./components/ui/Button"
 function App() {
   const [messages, setMessages] = useState(["Some Message", "Some other message"])
 
-  const [showMessages, setShowMessages] = useState(true)
+  const [showMessages, setShowMessages] = useState(false)
 
   const [showConfirmDelete, setShowConfirmDelete] = useState(false)
 
@@ -51,9 +51,8 @@ function App() {
     color="blue"
     text={showMessages ? "Hide" : "Show"}
     handleClick={() => setShowMessages((prev) => !prev)}
-    
-    />
 
+    />
     {
       showMessages && 
       <div>
@@ -67,13 +66,7 @@ function App() {
         {messages.length > 0 ? messages.map((msg) => <p key={msg}>{msg}</p>) : <h4>No messages in inbox</h4> }
 
       </div>
-
-
-
     }
-
-
-
     </>
   )
 }
