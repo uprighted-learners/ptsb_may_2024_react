@@ -1,6 +1,8 @@
 import { useState } from "react";
 
-const Auth = () => {
+const Auth = (props) => {
+
+
   // Setting up state variables to capture user input for signing up
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -8,6 +10,7 @@ const Auth = () => {
   const [password, setPassword] = useState("");
 
   const [errorMsg, setErrorMsg] = useState("")
+
 
   const handleSignup = async () => {
     try {
@@ -31,6 +34,7 @@ const Auth = () => {
       }
 
       console.log(json)
+      props.updateToken(json.Token);
     } catch (err) {
       setErrorMsg(err.message)
     }
