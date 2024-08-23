@@ -25,10 +25,6 @@ const Posts = () => {
     getPosts();
   }, []);
 
-  // Need to do a fetch get all posts
-  // Have to pass an auth token
-  // Display them
-
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();

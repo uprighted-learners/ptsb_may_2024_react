@@ -1,8 +1,8 @@
 import { useState } from "react";
 
+import PropTypes from 'prop-types'
+
 const Auth = (props) => {
-
-
   // Setting up state variables to capture user input for signing up
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -11,10 +11,9 @@ const Auth = (props) => {
 
   const [errorMsg, setErrorMsg] = useState("")
 
-
   const handleSignup = async () => {
     try {
-    setErrorMsg("")
+      errorMsg && setErrorMsg("")
       const result = await fetch("http://localhost:9000/user/signup", {
         method: "POST",
         headers: {
@@ -29,6 +28,7 @@ const Auth = (props) => {
       });
 
       const json = await result.json();
+      
       if(json.Error){
           throw new Error(json.Error)
       }
@@ -76,5 +76,9 @@ const Auth = (props) => {
     </div>
   );
 };
+
+Auth.propTypes = {
+  updateToken: PropTypes.func
+}
 
 export default Auth;
