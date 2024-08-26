@@ -1,0 +1,10 @@
+#root {
+  text-align: center;
+  min-height: 100dvh;
+}
+
+
+button {
+  /* Can add !important to override any css style */
+  /* background: purple !important; */
+}
